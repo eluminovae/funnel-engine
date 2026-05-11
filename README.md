@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+## USER FLOW ##
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+BotCommands
+|__ {
+      key: 'msg_welcome',
+      text: 'Привет! Вот обещанный подарок'
+      descr: 'Первое сообщение после /start + лид-магнит PDF'
+      buttons: [
+        {
+          text: 'Забрать подарок',
+          callbackData: 'msg_choose_lang',
+          fileId: null, // здесь должен быть file_id для PDF подарка
+        }
+      ]
+    }
+    |__{
+          key: 'msg_choose_lang',
+          text: 'Какой язык хочешь изучать?',
+          descr: 'Первая развилка: поддерживаемы языки', // langCode: 'en', 'de'
+          buttons: [
+            {
+              text: 'Английский язык',
+              callbackData: 'msg_lang_en',
+            },
+            {
+              text: 'Немецкий язык',
+              callbackData: 'msg_lang_de'
+            }
+          ]
+        } // далее весь путь одинаковый для всех языков. TODO: Получать 'msg_lang_' + langCode динамически?
+        |__ {
+              key: 'msg_lang_en',
+              text: 'Классно! У нас усть курсы для уровней А0-С1. Выбери уровень, с котрого хочешь начать изучение английского языка:',
+              descr: 'Вторая развилка: выбрать уровень - А0-А1 (Начинает с нуля), А2-С1 (Определение уровня по аудио 30 секунд)',
+              buttons: [
+                {
+                  text: 'Начну с нуля (А0-А1)',
+                  callbackData: 'msg_beginner'
+                },
+                {
+                  text: 'Я уже что-то знаю',
+                  callbackData: 'msg_choose_level'
+                }
+              ]
+            }
+            |__ {
+            |      key: 'msg_beginner',
+            |      text: 'Принято! С тобой свяжется наш менеджер. До встречи на уроке :) <br> А пока можешь посмотреть видео    нашего онлайн-урока.',
+            |      descr: 'отправить менеджеру "горячего" клиента (username)', 
+            |      buttons: [
+            |        {
+            |          text: 'Посмотреть видеозапись урока',
+            |          callbackData: 'msg_video'
+            |        },
+            |        {
+            |          text: 'Связаться с менеджером',
+            |          username: manager.username
+            |        }
+            |      ]
+            |    }
+            |    |__{
+            |          key: 'msg_video',
+            |          text: 'Вот так проходят наши уроки.',
+            |          descr: 'Здесь клиенту выдается кнопка для получения видео.',
+            |        }
+            |__ {
+                  key: 'msg_choose_level',
+                  text: 'Чтобы мы могли правильно определить твой уровень, запиши, пожалуйста, аудиосообщение на 30 секунд на любую тему и пришли мне в этот чат :)',
+                  TODO: Что дальше? Как получить и зарегистрировать аудио (получить его file_id)?
+                }

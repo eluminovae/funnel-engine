@@ -18,13 +18,15 @@ export interface Course {
 
 export interface Button {
   text: string; // 'Забрать подарок'
-  callbackData?: string // msg_choose_level
-  managerUserName?: string // вдруг понадобится связь с человеком
-  url?: string
+  callbackData?: string; // msg_choose_level
+  managerUserName?: string; // вдруг понадобится связь с человеком
+  url?: string;
+  fileId?: string;
 }
 
 export interface BotCommandMessage {
   key: string; // msg_welcome
   text: string // 'Привет! Твой подарок - PDF «Топ-100 фраз для выживания за границей»'
+  descr: string; // Описание команды бота для разработчика
   buttons?: Button[][]; // ['Забрать подарок']
 }
