@@ -9,10 +9,11 @@ export interface User { // Примеры:
 }
 
 export interface Course {
-  courseCode: string; // 'en'
+  courseCode: string; 
+  courseLang: string; // 'en'
   title: string; // 'English Premium'
-  description: string; // 'Это самый лучший курс для изучения англ языка'
-  videoFileId: string; // file.id (?) медиа в серверах Телеграм
+  description?: string; // 'Это самый лучший курс для изучения англ языка'
+  videoFileId?: string; // file.id (?) медиа в серверах Телеграм
   isActive: boolean; // true (чтобы быстро можно было скрыть курс)
 }
 
@@ -26,7 +27,8 @@ export interface Button {
 
 export interface BotCommandMessage {
   key: string; // msg_welcome
-  text: string // 'Привет! Твой подарок - PDF «Топ-100 фраз для выживания за границей»'
+  targetCourse: string; // 'en' | 'de'
+  text: string; // 'Привет! Твой подарок - PDF «Топ-100 фраз для выживания за границей»'
   descr: string; // Описание команды бота для разработчика
   buttons?: Button[][]; // ['Забрать подарок']
 }
